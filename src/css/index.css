@@ -2,6 +2,8 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  width: 100%;
+  height: 100%;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -11,6 +13,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.container-main {
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 
 a {
@@ -46,6 +54,19 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+table {
+  border: 2px solid forestgreen;
+  width: 100%;
+  /* height: 100%; */
+}
+
+th {
+  border-bottom: 1px solid black;
+}
+
+td {
+  text-align: center;
+}
 button:hover {
   border-color: #646cff;
 }
@@ -65,4 +86,37 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+.text-input {
+  border-width: 1px;
+  border-color: #aa9999;
+  outline-color: #300505;
+  outline-width: 1px;
+  margin-left: 10px;
+  color: #300505;
+  font-size: large;
+  flex: 0.5;
+}
+.text-input-mobile {
+  border-width: 1px;
+  border-color: #aa9999;
+  outline-color: #300505;
+  outline-width: 1px;
+  margin-left: 10px;
+  color: #300505;
+  font-size: large;
+  flex: 0.5;
+}
+.label-input {
+  color: #300505;
+  font-size: larger;
+  flex: 0.5;
+}
+.input_wrapp {
+  margin-top: 10px;
+  display: flex;
+  flex: 1;
+}
+.input-dropdown {
+  flex: 0.5;
 }
