@@ -4,18 +4,19 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import './css/index.css'
-import './css/fonts.css'
-import './css/style.css'
+import Sidebar from "./components/elements/Sidebar";
+import Dashboard from "./components/elements/Dashboard";
 
 function App() {
+  // return <RouterProvider router={router} />;
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <div className="flex">
+      <Sidebar />
+      <Dashboard />
+    </div>
   );
 }
 
 export default App;
 
-library.add(fab, fas, far)
+library.add(fab, fas, far);
