@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply font-normal text-base text-white bg-white relative z-1;
+    @apply font-fm-bindumathi text-base text-white bg-white relative z-1;
   }
 }

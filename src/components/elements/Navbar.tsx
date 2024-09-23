@@ -1,11 +1,21 @@
 import React from "react";
 import { FaBars, FaBell, FaSearch, FaUserCircle } from "react-icons/fa";
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  sidebarToggle: boolean;
+  setSidebarToggle: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ sidebarToggle, setSidebarToggle }) => {
   return (
-    <nav className="bg-slate-800 px-4 py-3 flex justify-between ml-64">
+    <nav className="bg-slate-800 px-4 py-3 flex justify-between font-arial-rounded">
       <div className="flex items-center gap-x-5">
-        <FaBars className="text-white me-4 curcor-pointer" />
+        <FaBars
+          className="text-white me-4 curcor-pointer"
+          onClick={() => {
+            setSidebarToggle(!sidebarToggle);
+          }}
+        />
         <span className="text-white font-semibold">Bank loyer system</span>
       </div>
       <div className="flex items-center gap-x-5">
