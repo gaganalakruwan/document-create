@@ -6,4 +6,42 @@
   body {
     @apply font-fm-bindumathi text-base text-white bg-white relative z-1;
   }
+
+  th {
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #345276;
+  }
+
+  td{
+    border: 1px solid #345223;
+    color: #345276;
+
+  }
+
+}
+
+.input_wrapp{
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.label-input{
+  color: black;
+}
+
+.text-input{
+  background-color:#f8f6f5;
+  padding: 10px;
+  border-radius: 10px;
+  color: gray;
+}
+.text-input-mobile{
+  background-color:#f8f6f5;
+  padding: 10px;
+  border-radius: 10px;
+  color: gray;
 }

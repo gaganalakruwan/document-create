@@ -8,7 +8,7 @@ const DropDown = ({ list,selectedValue,setSelectedValue, ...props }) => {
         <select
           value={selectedValue}
           onChange={(e) => setSelectedValue(e.target.value)}
-          className="ml-1 border text-xl pr-3 input-dropdown"
+          className="ml-1 border text-xl pr-3 input-dropdown text-black"
         >
           {list.map((option) => (
             <option key={option.value} value={option.value}>
