@@ -108,6 +108,7 @@ const Home = () => {
       mode: "cors", // Ensure CORS mode is enabled
     });
     const result = await response;
+    console.log(result);
     getLawyerData();
     setBankName("");
     closeBankModal();

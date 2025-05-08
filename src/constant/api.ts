@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.1.7/document/';
+const baseUrl = 'http://192.168.70.107/document/';
 // const baseUrl = 'https://aws.erav.lk/hidellana/mobile_api/';
 
 export const getBank = `${baseUrl}get_bank.php`;

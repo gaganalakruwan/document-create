@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const DropDown = ({ list,selectedValue,setSelectedValue, ...props }) => {
+const DropDown = ({ list, selectedValue, setSelectedValue, ...props }) => {
   return (
     <>
       <div className="input_wrapp">
@@ -10,6 +10,9 @@ const DropDown = ({ list,selectedValue,setSelectedValue, ...props }) => {
           onChange={(e) => setSelectedValue(e.target.value)}
           className="ml-1 border text-xl pr-3 input-dropdown text-black"
         >
+          <option value="" disabled>
+            -- Select an option --
+          </option>
           {list.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

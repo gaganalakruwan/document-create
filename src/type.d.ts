@@ -1,6 +1,7 @@
 import { string } from "yup";
 
 export declare type accusedType = {
+  id:number;
   number: number;
   name: string;
   address1: string;

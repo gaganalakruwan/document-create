@@ -10,6 +10,7 @@ import { accusedType, bankType, cityType } from "../../type";
 import { getBank, getCity, getLawyer, getSubBank } from "../../constant/api";
 import Checkbox from "../../components/checkbox/Checkbox";
 import MainFormModal from "../../components/mainFormModal/MainFormModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const customStyles = {
   content: {
@@ -75,6 +76,7 @@ const Main = () => {
     monthsOfPayment: "",
     totalAmount: "",
     settlementBoardCity: "",
+    settlementBoardDate: "",
     dateOfcalculationOfArriesLoan: "",
     letterOfDemandSendDate: "",
     arriesInterestAmount: "",
@@ -218,8 +220,8 @@ const Main = () => {
         let data = {
           value: val.id,
           label: `${val.name} ${val.address_no} ${val.address1} ${val.address2} ${val.city}`,
-          address:`${val.name} ${val.address_no} ${val.address1} ${val.address2} ${val.city}`,
-          cityName:`${val.city}`,
+          address: `${val.name} ${val.address_no} ${val.address1} ${val.address2} ${val.city}`,
+          cityName: `${val.city}`,
           city: val.city_id,
         };
         arrayData.push(data);
@@ -521,6 +523,7 @@ const Main = () => {
               onChange={(e) => onChangeEventOutstanding(e)}
               value={formDataOutstanding.accountNo}
               name={"accountNo"}
+              custmStyle={"font-arial-rounded"}
             />
             <CustomInput
               type={"text"}
@@ -528,6 +531,7 @@ const Main = () => {
               name="creditBlance"
               value={formDataOutstanding.creditBlance}
               onChange={(e) => onChangeEventOutstanding(e)}
+              custmStyle={"font-arial-rounded"}
             />
           </div>
           <SaveButton
@@ -540,18 +544,42 @@ const Main = () => {
   };
 
   const saveGurentors = () => {
-    allGurentors.push(formDataGurentor);
+    let maxId = allGurentors.reduce(
+      (max, obj) => Math.max(max, obj.id || 0),
+      0
+    );
+    let nextId = maxId + 1;
+    let newObj = { ...formDataGurentor, id: nextId };
+    setAllGurentors((prev) => [...prev, newObj]);
     setTimeout(() => {
       setFormDataGurentor(initialFormState);
     }, 500);
     setGurentorsModalIsOpen(false);
   };
+  const removeGurentors = (id: number) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      // User clicked OK
+      let filterData = allGurentors.filter((item) => item?.id != id);
+      setAllGurentors(filterData);
+    }
+  };
   const saveAccusedModal = () => {
-    allAccused.push(formDataAccused);
+    let maxId = allAccused.reduce((max, obj) => Math.max(max, obj.id || 0), 0);
+    let nextId = maxId + 1;
+    let newObj = { ...formDataAccused, id: nextId };
+    setAllAccused((prev) => [...prev, newObj]);
     setTimeout(() => {
       setFormDataAccused(initialFormState);
     }, 500);
     setFormDataAccused(initialFormState);
+  };
+  const removeAccused = (id: number) => {
+    console.log(">>>>>>>>", id);
+    if (window.confirm("Are you sure you want to delete?")) {
+      // User clicked OK
+      let filterData = allAccused.filter((item) => item?.id != id);
+      setAllAccused(filterData);
+    }
   };
   const saveInstallmentModal = () => {
     installmentDetails.push(formDataInstallment);
@@ -568,12 +596,27 @@ const Main = () => {
     setFormDataCredit(initialCreditFormState);
   };
   const saveOutstandingModal = () => {
-    outstandingDetails.push(formDataOutstanding);
+    let maxId = outstandingDetails.reduce(
+      (max, obj) => Math.max(max, obj.id || 0),
+      0
+    );
+    let nextId = maxId + 1;
+    let newObj = { ...formDataOutstanding, id: nextId };
+    setOutstandingDetails((prev) => [...prev, newObj]);
+
     setTimeout(() => {
       setFormDataOutstanding(initialOutstandingFormState);
     }, 500);
     setFormDataOutstanding(initialOutstandingFormState);
   };
+  
+  const removeOutstanding=()=>{
+    if (window.confirm("Are you sure you want to delete?")) {
+      // User clicked OK
+      let filterData = outstandingDetails.filter((item) => item?.id != id);
+      setOutstandingDetails(filterData);
+    }
+  }
 
   const handleChangecheckBox = (event: any, type: string) => {
     switch (type) {
@@ -634,6 +677,7 @@ const Main = () => {
     formDataAll.append("monthsOfPayment", formDataMain.monthsOfPayment);
     formDataAll.append("totalAmount", formDataMain.totalAmount);
     formDataAll.append("settlementBoardCity", formDataMain.settlementBoardCity);
+    formDataAll.append("settlementBoardDate", formDataMain.settlementBoardDate);
     formDataAll.append(
       "dateOfcalculationOfArriesLoan",
       formDataMain.dateOfcalculationOfArriesLoan
@@ -672,13 +716,20 @@ const Main = () => {
         <MainFormModal
           isOpen={mainFormOpen}
           setIsOpen={setMainFormOpen}
-          selectCity={allCity.filter((a)=>a.value==selectedValue)[0]?.label}
-          selectBank={allBanksOption.filter((a)=>a.value==selectBank)[0]?.address}
-          selectBankCity={allBanksOption.filter((a)=>a.value==selectBank)[0]?.cityName}
+          selectCity={allCity.filter((a) => a.value == selectedValue)[0]?.label}
+          selectBank={
+            allBanksOption.filter((a) => a.value == selectBank)[0]?.address
+          }
+          selectBankCity={
+            allBanksOption.filter((a) => a.value == selectBank)[0]?.cityName
+          }
           mainFormData={formDataMain}
           allAccused={allAccused}
           allGurentors={allGurentors}
           creditDetails={creditDetails}
+          installmentDetails={installmentDetails}
+          outstandingDetails={outstandingDetails}
+          selectLawyer={allLawyerOption.find((a)=>a.value==selectLawyer)?.label}
         />
       )}
       <div>
@@ -784,7 +835,7 @@ const Main = () => {
             </label>
           </div>
           <table className="grid">
-            <tr className="grid grid-cols-8">
+            <tr className="grid grid-cols-9">
               <th>wxlh</th>
               <th>ku</th>
               <th>,smsk wxlh</th>
@@ -793,11 +844,12 @@ const Main = () => {
               <th>,smskh 3</th>
               <th>ÿ'l wxlh</th>
               <th>k.rh</th>
+              <th></th>
             </tr>
             {allAccused.map((val, key) => {
               return (
-                <tr key={key} className="grid grid-cols-8">
-                  <td>{key + 1}</td>
+                <tr key={key} className="grid grid-cols-9">
+                  <td>{val.id}</td>
                   <td>{val.name}</td>
                   <td>{val.addressNo}</td>
                   <td>{val.address1}</td>
@@ -805,6 +857,13 @@ const Main = () => {
                   <td>{val.address3}</td>
                   <td>{val.phoneNo}</td>
                   <td>{val.city}</td>
+                  <td>
+                    <FontAwesomeIcon
+                      color="red"
+                      icon="fa fa-times-circle"
+                      onClick={() => removeAccused(val?.id)}
+                    />
+                  </td>
                 </tr>
               );
             })}
@@ -820,7 +879,7 @@ const Main = () => {
             wemlrejka úia;r we;=,;a lsrSu
           </label>
           <table className="grid">
-            <tr className="grid grid-cols-8">
+            <tr className="grid grid-cols-9">
               <th>wxlh</th>
               <th>ku</th>
               <th>,smsk wxlh</th>
@@ -829,10 +888,11 @@ const Main = () => {
               <th>,smskh 3</th>
               <th>ÿ'l wxlh</th>
               <th>k.rh</th>
+              <th></th>
             </tr>
             {allGurentors.map((val, key) => {
               return (
-                <tr key={key} className="grid grid-cols-8">
+                <tr key={key} className="grid grid-cols-9">
                   <td>{key + 1}</td>
                   <td>{val.name}</td>
                   <td>{val.addressNo}</td>
@@ -841,6 +901,13 @@ const Main = () => {
                   <td>{val.address3}</td>
                   <td>{val.phoneNo}</td>
                   <td>{val.city}</td>
+                  <td>
+                    <FontAwesomeIcon
+                      color="red"
+                      icon="fa fa-times-circle"
+                      onClick={() => removeGurentors(val?.id)}
+                    />
+                  </td>
                 </tr>
               );
             })}
@@ -976,7 +1043,15 @@ const Main = () => {
               placeholder={"iu: uKav,h"}
               onChange={(e) => onChangeEventMain(e)}
               value={formDataMain.settlementBoardCity}
-              name={"totalAmount"}
+              name={"settlementBoardCity"}
+            />
+            <CustomInput
+              type={"date"}
+              placeholder={"ksrjq,a fkdlsÍfï iy;slh ÿka Èkh"}
+              onChange={(e) => onChangeEventMain(e)}
+              value={formDataMain.settlementBoardDate}
+              name={"settlementBoardDate"}
+              custmStyle={"font-arial-rounded"}
             />
 
             <CustomInput
@@ -1002,9 +1077,15 @@ const Main = () => {
                 return (
                   <tr key={key} className="grid grid-cols-4">
                     <td>{key + 1}</td>
-                    <td>{val.accountNo}</td>
-                    <td>{val.creditBlance}</td>
-                    <td></td>
+                    <td className="font-arial-rounded">{val.accountNo}</td>
+                    <td className="font-arial-rounded">{val.creditBlance}</td>
+                    <td>
+                      <FontAwesomeIcon
+                        color="red"
+                        icon="fa fa-times-circle"
+                        onClick={() => removeOutstanding(val?.id)}
+                      />
+                    </td>
                   </tr>
                 );
               })}
